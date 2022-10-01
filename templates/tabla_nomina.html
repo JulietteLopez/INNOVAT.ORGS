@@ -1,0 +1,116 @@
+{% extends "layout.html" %} {% block content %}
+<script src="https://kit.fontawesome.com/c8a4eef53d.js" crossorigin="anonymous"></script>
+
+<style>
+    .content-table {
+        border-collapse: collapse;
+        margin: 25px 0;
+        font-size: 0.9en;
+        min-width: 600px;
+        border-radius: 5px 5px 0 0;
+        overflow: hidden;
+        box-shadow: 0 0 20px rgb(0, 0, 0, 0.15);
+    }
+    
+    .content-table thead tr {
+        background-color: #333769;
+        color: #ffff;
+        text-align: left;
+        font-weight: bold;
+    }
+    
+    .content-table th,
+    .content-table td {
+        padding: 12px 15px;
+    }
+    
+    .content-table tbody tr {
+        border-bottom: 1px solid #dddd;
+    }
+    
+    .content-table tbody tr:nth-of-type(even) {
+        background-color: #f3f3f3;
+    }
+    
+    .content-table tbody tr:last-of-type {
+        border-bottom: 2px solid #333769;
+    }
+    
+    .content-table tbody tr.active-row {
+        font-weight: bold;
+        color: #333769;
+    }
+</style>
+
+<body style="background-color: #ffff;">
+    <right><a class="btn btn-primary" href="/nueva_nomina" title="Añadir un tipo de pago" style="text-decoration:none;">Añadir nuevo concepto.</a></right>
+    <center>
+        <h3>Concepto de Nómina</h3>
+        <form action="/buscar_nomina" method="post" pattern="[A-Z]{4}[0-9]{6}[A-Z]{6}[0-9A-Z]{1}[0-9]{1}" title="Por favor, escriba el año correctamente " required minlength="18" maxlength="18"> 
+            <div class="form-group col-md-2">
+                <p><input type="text" title="Buscar la nomina por el año" class="form-control" name="anio" id="anio" placeholder="Año a buscar" required>
+                    <br><button type="submit" class="btn btn-primary">Buscar</button>
+            </div>
+        </form>
+        <!-- <form action="/buscar_area" method="post" pattern="[A-Z]{4}[0-9]{6}[A-Z]{6}[0-9A-Z]{1}[0-9]{1}" title="Por favor, escriba el área correctamente " required minlength="18" maxlength="18">  
+            <div class="form-group col-md-2">
+                <p><input type="text" title="Busca area " class="form-control" name="bu_area" id="bu_area" placeholder="Área a buscar" required>
+                    <br><button type="submit" class="btn btn-primary">Buscar</button>
+            </div>
+        </form> -->
+    </center>
+    <center>
+        <table class="content-table">
+    </center>
+    <thead>
+        <tr>
+            <th>Tipo de nómina</th>
+            <th>Periodo</th>
+            <th>área</th>
+            <th>Fecha</th>
+            <th>Año</th>
+            <th>Consecutivo</th>
+            <th></th>
+            <th></th>
+              
+        </tr>
+    </thead>
+    <tbody>
+        {% for nomina in nominas %}
+        <tr>
+            <td>
+                {{ nomina.2 }}
+            </td>
+            <td>
+                {{ nomina.4 }}
+            </td>
+            <td>
+                {{ nomina.6 }}
+            </td>
+            <td>
+                {{ nomina.7 }}
+            </td>
+            <td>
+                {{ nomina.8 }}
+            </td>
+            <td>
+                {{ nomina.9 }}
+            </td>
+            
+            <td bgcolor="#828282" width="60">
+                <center><a href="/ed_nomina/{{nomina.0}}" style="color:#FFFFFF; text-decoration:none;">Editar &nbsp;<i class="far fa-edit"></i></a></center>
+            </td>
+            <td bgcolor="#FFF5757" width="60">
+                <center><a href="/bo_nomina/{{nomina.0}}" style="color:#FFFFFF; text-decoration:none;">Borrar &nbsp;<i class="fas fa-trash-alt"></i></a></center>
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+    </table>
+    <script type="text/javascript" src="/static/js/jquery-3.2.1.slim.min.js"></script>
+    <script type="text/javascript" src="/static/js/popper.min.js"></script>
+    <script type="text/javascript" src="/static/js/bootstrap.min.js"></script>
+
+</body>
+
+{% endblock %}

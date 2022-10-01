@@ -1,0 +1,181 @@
+{% extends "layout.html" %}
+
+{% block content %}
+<head>
+    <title>HOME-INT</title>
+</head>
+<body style="background-color:#ffff;">
+<script src="https://kit.fontawesome.com/c8a4eef53d.js" crossorigin="anonymous"></script>
+<h2>Editar percepcion</h2>
+    <form action="/modifica_det_nomina/{{nomina.0}}" method="post">
+        <div class="form-row">
+                &nbsp;&nbsp;&nbsp;
+                <div class="form-group col-4">
+                    <label for="curp">CURP</label>
+                    <input type="text" class="form-control" name="curp" id="curp" required>
+                </div>
+                
+                <div class="form-group col-4">
+                    <label for="sal_base">Salario base</label>
+                    <input type="text" class="form-control" name="sal_base" id="sal_base" readonly>
+                </div>
+                <br>
+                &nbsp;&nbsp;&nbsp;
+                <div class="form-group col-4">
+                    <label for="tot_per">Total de percepciones</label>
+                    <input type="text" class="form-control" name="tot_per" id="tot_per" required>
+                </div>
+            
+        
+                <div class="form-group col-4">
+                  <label for="isr">Impuesto Sobre la Renta</label>
+                  <input type="text" class="form-control" name="isr" id="isr" required>
+                </div>
+        
+                <div class="form-group col-md-4">
+                    <label for="imss">IMSS</label>
+                    <input type="text" class="form-control" name="imss" id="imss" required>
+                </div>
+        
+                <div class="form-group col-md-4">
+                    <label for="tot_ded">Total de deducciones</label>
+                    <input type="text" class="form-control" name="tot_ded" id="tot_ded" required>
+                </div>
+        
+                <div class="form-group col-4">
+                    <label for="sal_neto">Salario neto</label>
+                    <input type="text" class="form-control" name="sal_neto" id="sal_neto" required>
+                </div>
+        
+                <div class="form-group col-4">
+                    <label for="tot_grabado">Total de grabado</label>
+                    <input type="text" class="form-control" name="tot_grabado" id="tot_grabado" required>
+                </div>
+        </div>
+        
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                <br>
+                <button type="submit" class="btn btn-primary">Enviar Cambios &nbsp;<i class="fas fa-paper-plane"></i></button>
+                <script type="text/javascript" src="/static/js/jquery-3.2.1.slim.min.js"></script>
+                <script type="text/javascript" src="/static/js/popper.min.js"></script>
+                <script type="text/javascript" src="/static/js/bootstrap.min.js"></script>
+
+    <a class="btn btn-primary" href="/nomina" align="right">Regresar &nbsp;<i class="fas fa-undo-alt"></i></a>
+    </form>
+    <!---------------------------------------------------------------------------------------------------------------------------------->
+    
+    <style>
+        .content-table {
+            border-collapse: collapse;
+            margin: 25px 0;
+            font-size: 0.9en;
+            min-width: 600px;
+            border-radius: 5px 5px 0 0;
+            overflow: hidden;
+            box-shadow: 0 0 20px rgb(0, 0, 0, 0.15);
+        }
+        
+        .content-table thead tr {
+            background-color: #333769;
+            color: #ffff;
+            text-align: left;
+            font-weight: bold;
+        }
+        
+        .content-table th,
+        .content-table td {
+            padding: 12px 15px;
+        }
+        
+        .content-table tbody tr {
+            border-bottom: 1px solid #dddd;
+        }
+        
+        .content-table tbody tr:nth-of-type(even) {
+            background-color: #f3f3f3;
+        }
+        
+        .content-table tbody tr:last-of-type {
+            border-bottom: 2px solid #333769;
+        }
+        
+        .content-table tbody tr.active-row {
+            font-weight: bold;
+            color: #333769;
+        }
+      </style>
+
+<!------------estilo de tabla --------------------------------------------->
+
+      <form action="/agrega_per_puesto/{{nomina.0}}" method="post">
+        <br>
+        <center><h3>Percepciones  por puesto</h3></center><br>
+        <div class="panel panel-primary">
+            <div class="panel-heading" >
+                <form class="form-inline" action="/agrega_per_puesto/{{detalle.0}}" method="post">
+                    <div class="form-row">
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        <input type="hidden" name="per" id="per" value="{{detalle.0}}">
+        
+                          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<label for="puesto">Puesto</label>
+                          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<select required name="puesto" id="puesto" class="form-control" style="width: 200px;">
+                              <option value="" selected>Choose...</option>
+                                  {%
+                                      for percepcion in percepciones
+                                  %}
+                                      <option value="{{ nomina.0 }}">{{ nomina.1 }}</option>
+                                 {%   endfor %}            
+                                </select>
+                          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<label for="periodo">Periodo</label>
+                          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<select  name="periodo" id="periodo" class="form-control" style="width: 200px;">
+                                    <option value="" selected>Choose...</option>
+                                         {%
+                                             for periodo in periodos
+                                         %}
+                                             <option value="{{ nomina.0 }}">{{ nomina.1 }}</option>
+                                        {%   endfor %}            
+                                    </select>
+                          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<label for="monto">Monto</label>
+                          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type="text" class="form-control" name="monto" id="monto" placeholder="monto" required style="width: 200px;">
+  
+                          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<button type="submit" href="/agrega_per_puesto" class="btn btn-primary">Agrega </button>
+                            </form>
+                          </div>
+                    <br>
+                    <center>
+                      <table class="content-table">
+                    </center>
+                    <thead>
+                      <tr>
+                        <th>Puesto</th>
+                        <th>Periodo</th>
+                        <th>Monto</th>
+                        <th></th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {% for mon in per_puesto %}
+                      <tr>
+                        <td>
+                          {{ mon.2 }}
+                        </td>
+                        <td>
+                          {{ mon.4 }}
+                        </td>
+                        <td>
+                            {{ mon.7 }}
+                          </td>
+                        <td  bgcolor="#FFF5757" width="60">
+                          <center><a href="/bor_per_puesto/{{mon.0}}/{{mon.1}}" style="color:#FFFFFF; text-decoration:none;">Borrar &nbsp;<i class="far fa-edit"></i></a></center>
+                        </td>
+                      </tr>
+                      {% endfor %}
+                    </tbody>
+                    </table>
+      
+    </form>
+            
+</body>
+
+{% endblock %}
